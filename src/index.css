@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@theme {
+  --slide-height: 50rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+
+  --font-heading: "Spicy Rice", cursive;
+  --font-body: "Roboto", sans-serif;
+
+  /* Brand (Yellow–Brown–Black) */
+  --color-brand-50: #f4b323; /* Bright Yellow */
+  --color-brand-100: #e4e4e4; /* Light Grey */
+  --color-brand-200: #f4f4f4; /* Lighter Grey */
+  --color-brand-300: #fbfbfb; /* Almost White */
+  --color-brand-400: #ffffff; /* White */
+  --color-brand-500: #9f4103; /* Dark Brown */
+  --color-brand-600: #292929; /* Dark Grey */
+  --color-brand-700: #000000; /* Black */
+
+  /* Grey scale from your set */
+  --color-grey-0: #ffffff;
+  --color-grey-50: #fbfbfb;
+  --color-grey-100: #f4f4f4;
+  --color-grey-200: #e4e4e4;
+  --color-grey-300: #292929;
+  --color-grey-400: #000000;
+
+  /* Accents (if needed) */
+  --color-yellow-500: #f4b323;
+  --color-brown-700: #9f4103;
+
+  /* Utility colors */
+  --backdrop-color: rgba(255, 255, 255, 0.1);
+}
+
+/* *:focus,
+*:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 0.15rem white,
+    0 0 0 0.3rem var(--color-brand-500); 
+} */
+
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background-color: var(--color-brand-500);
+  color: var(--color-brand-400);
+}
+
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+}
+
+.embla__dot {
+  background-color: transparent;
+  touch-action: manipulation;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__dot::after {
+  transition: all 0.2s ease-in-out;
+  background-color: var(--color-brand-500);
+  width: 1rem;
+  height: 1rem;
+  transform: skewX(-22deg);
+  display: flex;
+  align-items: center;
+  content: "";
+}
+.embla__dot--selected::after {
+  width: 2.4rem;
+  background-color: var(--color-brand-50);
+}
+
+/* Hide scrollbar for horizontal scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* One-time horizontal nudge animation to hint scrollability */
+@keyframes horizontalNudge {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-12px);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.scroll-hint-animate {
+  animation: horizontalNudge 1000ms ease-in-out 1;
+}
+
+/* Show hidden controls on devices without hover (e.g., touch) */
+@media (hover: none), (any-hover: none), (pointer: coarse) {
+  .show-remove-on-nonhover {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
