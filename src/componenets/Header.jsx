@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import HeaderNav from "./../HeaderNav";
-import EmblaCarousel from "../carousel/EmblaCarousel";
+import HeaderNav from "./HeaderNav";
+import EmblaCarousel from "./carousel/EmblaCarousel";
 import { LogoBig } from "./Logo";
 import { useLocation } from "react-router";
-import Breadcrumb from "../Breadcrumb";
-import HeaderSkeleton from "../skeletonLoaders/HeaderSkeleton";
-import { useHeaderData } from "../../hooks/home/useHeaderData";
+import Breadcrumb from "./Breadcrumb";
 
 const dryFruitsSlides = [
   {
@@ -41,7 +39,6 @@ function Header() {
   const stickyNavRef = useRef(null);
   const [isHeaderNavSticky, setIsHeaderNavSticky] = useState(false);
   const { pathname } = useLocation();
-  const { isLoading, error } = useHeaderData();
 
   useEffect(() => {
     if (!headerRef.current || !stickyNavRef.current) return;
@@ -64,9 +61,6 @@ function Header() {
 
     return () => observer.disconnect();
   }, []);
-
-  if (isLoading) return <HeaderSkeleton />;
-  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <header
@@ -109,7 +103,7 @@ function Header() {
         </EmblaCarousel>
       ) : (
         <div
-          className="mx-auto flex w-full items-end justify-center bg-cover bg-fixed bg-center bg-no-repeat pb-20"
+          className="mx-auto flex w-full items-end justify-center pb-20"
           style={{
             backgroundImage: `url(${dryFruitsSlides[2]?.bgImage})`,
             minHeight: `calc((var(--slide-height) + 3rem) / 2)`,

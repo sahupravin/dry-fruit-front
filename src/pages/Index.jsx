@@ -1,19 +1,17 @@
+import Hero from "../componenets/home/Hero";
 import Gallary from "../componenets/home/Gallary1";
-import SpecialOffers from "../componenets/home/SpecialOffers";
+// import SpecialOffers from "../componenets/home/SpecialOffers";
 import SectionBestProducts from "../componenets/home/SectionBestProducts";
-import SectionOurTeam from "../componenets/home/SectionOurTeam";
-import SectionServiceFeatures from "../componenets/home/SectionServiceFeatures";
-import SectionBlogPost from "../componenets/home/SectionBlogPost";
+// import SectionServiceFeatures from "../componenets/home/SectionServiceFeatures";
 
 function Index() {
   return (
     <main>
+      <Hero />
       <SectionBestProducts />
-      <SpecialOffers />
+      {/* <SpecialOffers /> */}
       <Gallary />
-      <SectionOurTeam />
-      <SectionServiceFeatures />
-      <SectionBlogPost />
+      {/* <SectionServiceFeatures /> */}
     </main>
   );
 }

@@ -14,6 +14,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
 import { useWishlist } from "../features/wishlist/hooks/useWishlist";
+import { getLocalStorage } from "../utils/localStorage";
 
 // Navigation links
 const navLinks = [
@@ -171,6 +172,16 @@ const HeaderNav = forwardRef(function HeaderNav({ isSticky = true }, ref) {
     }, 120);
   };
 
+  const handleProfileClick = () => {
+    const token = getLocalStorage("access_token");
+    if (token) {
+      navigate("/auth/profile");
+    } else {
+      navigate("/auth/login");
+    }
+    setIsOpen(false);
+  };
+
   return (
     <nav ref={ref} className={navClasses}>
       {/* Desktop Nav */}
@@ -227,7 +238,7 @@ const HeaderNav = forwardRef(function HeaderNav({ isSticky = true }, ref) {
           onSearch={toggleSearch}
           onCart={() => openCart()}
           onWishlist={() => navigate("/pages/wishlist")}
-          onProfile={() => console.log("Profile clicked")}
+          onProfile={handleProfileClick}
           wishlistCount={getWishlistCount()}
           cartCount={getCartCount()}
         />
@@ -265,7 +276,7 @@ const HeaderNav = forwardRef(function HeaderNav({ isSticky = true }, ref) {
             navigate("/pages/wishlist");
             setIsOpen(false);
           }}
-          onProfile={() => setIsOpen(false)}
+          onProfile={handleProfileClick}
           wishlistCount={getWishlistCount()}
           cartCount={getCartCount()}
         />

@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { Link } from "react-router";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import ContainerWrapper from "../common/ContainerWrapper";
@@ -114,12 +115,12 @@ function SectionBlogPost() {
                       </div>
                       <p className="text-black/80">{post.excerpt}</p>
                       <div>
-                        <a
-                          href="#"
+                        <Link
+                          to="/blog"
                           className="border-brand-500 text-brand-500 hover:bg-brand-50 hover:text-brand-600 hover:border-brand-50 inline-block rounded-full border-2 px-6 py-3 transition-all duration-300 ease-in-out"
                         >
                           Read more
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

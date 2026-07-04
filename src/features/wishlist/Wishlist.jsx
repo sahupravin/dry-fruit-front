@@ -1,90 +1,87 @@
 import { Link } from "react-router";
-import { HiShoppingCart, HiTrash } from "react-icons/hi2";
+import { HiShoppingCart, HiTrash, HiArrowRight } from "react-icons/hi2";
 import { useWishlist } from "./hooks/useWishlist";
 import { useCart } from "../../context/CartContext";
 import Button from "../../componenets/common/Button";
 import ContainerWrapper from "../../componenets/common/ContainerWrapper";
 import SectionWrapper from "../../componenets/common/SectionWrapper";
+import AnimatedLines from "../../componenets/common/AnimatedLines";
 
 // Table Row Component for Large Screens
 const WishlistTableRow = ({ product, onRemove, onAddToCart }) => {
   return (
-    <tr className="border-b border-gray-200 hover:bg-gray-50">
+    <tr className="group border-b border-gray-100 transition-colors duration-200 hover:bg-brand-300/50">
       {/* Product Image & Name */}
-      <td className="p-4">
-        <div className="flex items-center justify-center gap-4">
-          <div className="relative h-20 w-20 overflow-hidden">
+      <td className="p-6">
+        <div className="flex items-center gap-6">
+          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-brand-200">
             <img
               src={product.image}
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
             {product.tag && (
               <span
-                className={`absolute top-1 left-1 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-medium ${
-                  product.tag.toLowerCase() === "sale" &&
-                  "bg-brand-500 text-brand-400"
-                } ${
-                  product.tag.toLowerCase() === "hot" &&
-                  "bg-brand-50 text-brand-700"
-                } ${
-                  product.tag.toLowerCase() === "new" &&
-                  "text-brand-400 bg-[#007AFF]"
+                className={`absolute top-2 left-2 flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-bold uppercase tracking-tighter ${
+                  product.tag.toLowerCase() === "sale"
+                    ? "bg-brand-50 text-brand-500"
+                    : product.tag.toLowerCase() === "hot"
+                      ? "bg-brand-500 text-white"
+                      : "bg-[#007AFF] text-white"
                 }`}
               >
                 {product.tag}
               </span>
             )}
           </div>
-        </div>
-      </td>
-
-      <td className="p-4">
-        <div className="flex flex-col gap-1">
-          <h3 className="font-heading text-brand-500 text-lg">
-            {product.name}
-          </h3>
-          <p className="text-brand-600 text-sm">{product.weight}</p>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-heading text-brand-500 text-xl leading-tight">
+              {product.name}
+            </h3>
+            <p className="text-brand-600/70 text-sm font-medium">
+              {product.weight}
+            </p>
+          </div>
         </div>
       </td>
 
       {/* Price */}
-      <td className="p-4">
-        <div className="text-center">
-          <span className="text-brand-500 text-lg font-bold">
+      <td className="p-6">
+        <div className="flex flex-col items-center">
+          <span className="text-brand-500 text-xl font-bold">
             {product.price}
           </span>
           {product.regularPrice && (
-            <div className="text-brand-100 text-sm line-through">
+            <span className="text-brand-100 text-sm font-medium line-through">
               {product.regularPrice}
-            </div>
+            </span>
           )}
         </div>
       </td>
 
       {/* Stock Status */}
-      <td className="p-4 text-center">
-        <span className="bg-brand-50 text-brand-600 inline-flex items-center justify-center rounded-full px-6 py-2 font-medium">
+      <td className="p-6 text-center">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-600 uppercase tracking-wider">
+          <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
           In Stock
         </span>
       </td>
 
       {/* Actions */}
-      <td className="py-4">
-        <div className="flex items-center justify-center gap-2">
+      <td className="p-6">
+        <div className="flex items-center justify-center gap-3">
           <Button
-            variant="secondary"
-            borderColor="primary"
+            variant="primary"
             size="small"
             onClick={() => onAddToCart(product)}
-            className="flex items-center gap-2"
+            className="group/btn flex items-center gap-2 px-5 font-bold"
           >
-            <HiShoppingCart className="h-4 w-4" />
+            <HiShoppingCart className="h-4 w-4 transition-transform group-hover/btn:-translate-y-0.5" />
             Add to Cart
           </Button>
           <button
             onClick={() => onRemove(product.id)}
-            className="flex items-center justify-center p-2 text-red-500 transition-colors duration-200 hover:text-red-700"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-red-50 text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-200"
             title="Remove from wishlist"
           >
             <HiTrash className="h-5 w-5" />
@@ -98,88 +95,76 @@ const WishlistTableRow = ({ product, onRemove, onAddToCart }) => {
 // Product Card Component for Small Screens
 const WishlistProductCard = ({ product, onRemove, onAddToCart }) => {
   return (
-    <div className="group relative w-full cursor-grab bg-white shadow-[0_0_1rem_2px_rgba(0,0,0,0.06)]">
+    <div className="group relative overflow-hidden bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+      <AnimatedLines />
+
       {/* Product Image */}
-      <div className="group/image-container h-56 w-full overflow-hidden">
-        <div className="relative h-full w-full">
-          {product.tag && (
-            <span
-              className={`absolute top-4 left-3 z-10 flex size-8 items-center justify-center rounded-full p-2 text-[11px] capitalize ${
-                product.tag.toLowerCase() === "sale" &&
-                "bg-brand-500 text-brand-400"
-              } ${
-                product.tag.toLowerCase() === "hot" &&
-                "bg-brand-50 text-brand-700 font-medium"
-              } ${
-                product.tag.toLowerCase() === "new" &&
-                "text-brand-400 bg-[#007AFF]"
-              }`}
-            >
-              {product.tag}
-            </span>
-          )}
-          <img
-            src={product.image}
-            alt={product.name}
-            className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
-          />
-          <button
-            onClick={() => onRemove(product.id)}
-            className="absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-red-500 transition-colors duration-200 hover:bg-red-500 hover:text-white"
-            title="Remove from wishlist"
+      <div className="relative h-64 w-full overflow-hidden bg-brand-200">
+        {product.tag && (
+          <span
+            className={`absolute top-4 left-4 z-20 flex h-10 w-10 items-center justify-center rounded-full text-[10px] font-bold uppercase tracking-tighter ${
+              product.tag.toLowerCase() === "sale"
+                ? "bg-brand-50 text-brand-500"
+                : product.tag.toLowerCase() === "hot"
+                  ? "bg-brand-500 text-white"
+                  : "bg-[#007AFF] text-white"
+            }`}
           >
-            <HiTrash className="h-4 w-4" />
+            {product.tag}
+          </span>
+        )}
+
+        <button
+          onClick={() => onRemove(product.id)}
+          className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-red-500 shadow-sm transition-all duration-300 hover:bg-red-500 hover:text-white lg:opacity-0 lg:group-hover:opacity-100"
+          title="Remove from wishlist"
+        >
+          <HiTrash className="h-5 w-5" />
+        </button>
+
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+
+        {/* Quick Add Overlay for mobile/tablet */}
+        <div className="absolute inset-x-0 bottom-0 z-20 flex translate-y-full items-center justify-center bg-brand-500/90 p-3 transition-transform duration-300 group-hover:translate-y-0">
+          <button
+            onClick={() => onAddToCart(product)}
+            className="flex w-full items-center justify-center gap-2 text-sm font-bold text-white uppercase tracking-widest"
+          >
+            <HiShoppingCart className="h-4 w-4" />
+            Add to Cart
           </button>
         </div>
       </div>
 
-      {/* Product Details - Centered like FeaturedProductCard */}
-      <div className="flex flex-col items-center justify-center p-8">
-        <h2 className="font-heading text-brand-500 mb-2.5 text-center text-2xl">
+      {/* Product Details */}
+      <div className="flex flex-col items-center p-6 text-center">
+        <h3 className="font-heading text-brand-500 mb-1 text-2xl leading-tight">
           {product.name}
-        </h2>
-
-        <p className="text-brand-600 mb-2 text-center text-sm">
+        </h3>
+        <p className="text-brand-600/60 mb-4 text-sm font-medium">
           {product.weight}
         </p>
 
-        {/* Price - Centered */}
-        <p className="mt-auto mb-2.5 flex w-full max-w-[40%] items-center justify-center gap-2 text-lg">
-          <data
-            className="font-bold"
-            value={product.price.replace(/[^0-9.-]+/g, "")}
-          >
+        <div className="flex items-center gap-3">
+          <span className="text-brand-500 text-2xl font-bold">
             {product.price}
-          </data>
-          {product.regularPrice && (
-            <data
-              className="text-brand-100 ml-auto text-sm line-through"
-              value={product.regularPrice.replace(/[^0-9.-]+/g, "")}
-            >
-              {product.regularPrice}
-            </data>
-          )}
-        </p>
-
-        {/* Stock Status - Centered */}
-        <div className="mb-4">
-          <span className="bg-brand-50 text-brand-600 inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-medium">
-            In Stock
           </span>
+          {product.regularPrice && (
+            <span className="text-brand-100 text-base font-medium line-through">
+              {product.regularPrice}
+            </span>
+          )}
         </div>
 
-        {/* Add to Cart Button - Centered */}
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            variant="secondary"
-            borderColor="primary"
-            size="small"
-            onClick={() => onAddToCart(product)}
-            className="flex items-center gap-2"
-          >
-            <HiShoppingCart className="h-4 w-4" />
-            Add to Cart
-          </Button>
+        <div className="mt-4">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-[10px] font-bold text-green-600 uppercase tracking-widest">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+            In Stock
+          </span>
         </div>
       </div>
     </div>
@@ -188,27 +173,30 @@ const WishlistProductCard = ({ product, onRemove, onAddToCart }) => {
 
 const EmptyWishlist = () => {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="mb-6">
-        <div className="text-brand-100 mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-          <HiShoppingCart className="h-12 w-12" />
+    <div className="flex flex-col items-center justify-center rounded-3xl bg-white py-20 px-6 text-center shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+      <div className="relative mb-8">
+        <div className="flex h-32 w-32 items-center justify-center rounded-full bg-brand-50/30">
+          <HiShoppingCart className="text-brand-50 h-16 w-16" />
+        </div>
+        <div className="absolute -top-2 -right-2 flex h-10 w-10 animate-bounce items-center justify-center rounded-full bg-brand-500 text-white shadow-lg">
+          <span className="text-xl font-bold">?</span>
         </div>
       </div>
-      <h2 className="font-heading text-brand-500 mb-4 text-3xl">
-        Your Wishlist is Empty
+      <h2 className="font-heading text-brand-500 mb-4 text-4xl">
+        Wishlist is feeling lonely
       </h2>
-      <p className="text-brand-600 mb-8 max-w-md text-lg">
-        Looks like you haven't added any items to your wishlist yet. Start
-        exploring our products and add your favorites!
+      <p className="text-brand-600 mx-auto mb-10 max-w-md text-lg leading-relaxed">
+        Your wishlist is currently empty. Give it some love by adding your
+        favorite items!
       </p>
       <Link to="/">
         <Button
-          variant="secondary"
-          borderColor="primary"
-          size="medium"
-          textColor="black"
+          variant="primary"
+          size="large"
+          className="flex items-center gap-3 px-12 font-bold uppercase tracking-widest"
         >
-          Continue Shopping
+          Go Shopping
+          <HiArrowRight className="h-5 w-5" />
         </Button>
       </Link>
     </div>
@@ -217,26 +205,28 @@ const EmptyWishlist = () => {
 
 const WishlistHeader = ({ itemCount, onClearAll }) => {
   return (
-    <div className="mb-8 flex items-center justify-between gap-4">
+    <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="font-heading text-brand-500 mb-2 text-4xl">
+        <h1 className="font-heading text-brand-500 mb-3 text-5xl md:text-6xl">
           My Wishlist
         </h1>
-        <p className="text-brand-600 text-lg">
-          {itemCount} {itemCount === 1 ? "item" : "items"} in your wishlist
-        </p>
+        <div className="flex items-center gap-3">
+          <span className="bg-brand-500 flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white">
+            {itemCount}
+          </span>
+          <p className="text-brand-600 text-xl font-medium">
+            {itemCount === 1 ? "Product" : "Products"} Saved
+          </p>
+        </div>
       </div>
       {itemCount > 0 && (
-        <Button
-          variant="secondary"
-          borderColor="red-500"
-          size="medium"
-          textColor="red-500"
+        <button
           onClick={onClearAll}
-          className="self-start sm:self-auto"
+          className="flex items-center gap-2 border-b-2 border-red-200 pb-1 text-sm font-bold text-red-500 transition-all hover:border-red-500"
         >
-          Clear All
-        </Button>
+          <HiTrash className="h-4 w-4" />
+          CLEAR ALL WISHLIST
+        </button>
       )}
     </div>
   );
@@ -284,28 +274,25 @@ function Wishlist() {
           ) : (
             <>
               {/* Table View for Large Screens (lg and above) */}
-              <div className="hidden overflow-hidden border border-gray-100 bg-white lg:block">
-                <table className="w-full">
-                  <thead className="bg-brand-200">
-                    <tr>
-                      <th className="text-brand-600 p-4 text-center font-bold tracking-wider uppercase">
-                        Image
+              <div className="hidden overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] lg:block">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-brand-50/5">
+                      <th className="text-brand-500 p-6 text-start text-xs font-bold uppercase tracking-[0.2em]">
+                        Product Details
                       </th>
-                      <th className="text-brand-600 p-4 text-start font-bold tracking-wider uppercase">
-                        Product
-                      </th>
-                      <th className="text-brand-600 p-4 text-center font-bold tracking-wider uppercase">
+                      <th className="text-brand-500 p-6 text-center text-xs font-bold uppercase tracking-[0.2em]">
                         Price
                       </th>
-                      <th className="text-brand-600 p-4 text-center font-bold tracking-wider uppercase">
-                        Stock Status
+                      <th className="text-brand-500 p-6 text-center text-xs font-bold uppercase tracking-[0.2em]">
+                        Availability
                       </th>
-                      <th className="text-brand-600 p-4 text-center font-bold tracking-wider uppercase">
+                      <th className="text-brand-500 p-6 text-center text-xs font-bold uppercase tracking-[0.2em]">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
+                  <tbody className="divide-y divide-gray-50">
                     {wishlistItems.map((product) => (
                       <WishlistTableRow
                         key={product.id}
@@ -319,7 +306,7 @@ function Wishlist() {
               </div>
 
               {/* Card Grid View for Small Screens (below lg) */}
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:hidden">
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:hidden">
                 {wishlistItems.map((product) => (
                   <WishlistProductCard
                     key={product.id}

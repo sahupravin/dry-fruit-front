@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthRoutes } from "./routes/AuthRoutes";
 import { ProtectedRoutes } from "./routes/ProtectedRoutes";
 import { Suspense } from "react";
+import Loader from "./componenets/common/Loader";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ function App() {
       <SearchProvider>
         <CartProvider>
           <WishlistProvider>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loader />}>
               <LayoutWrapper>
                 <Routes>
                   {AuthRoutes()}
