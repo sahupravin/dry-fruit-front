@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useSearchParams } from "react-router";
 import FeaturedProductCard from "../componenets/common/FeaturedProductCard";
+import ProductListCard from "../componenets/common/ProductListCard";
 import Button from "../componenets/common/Button";
 import ContainerWrapper from "../componenets/common/ContainerWrapper";
 import SectionWrapper from "../componenets/common/SectionWrapper";
@@ -8,6 +10,8 @@ import ModalDrawer from "../componenets/common/model/ModelDrawer";
 import Select from "../componenets/common/Select";
 import { TbGridDots, TbListDetails } from "react-icons/tb";
 import { CiFilter } from "react-icons/ci";
+
+// ... (sample product data remains the same)
 
 // Sample product data
 const sampleProducts = [
@@ -290,12 +294,41 @@ const priceRanges = [
 const brands = ["catch", "Vedaka", "Kesari", "Eastern", "Oskino"];
 
 function ProductListing() {
+  const { category: urlCategory } = useParams();
+  const [searchParams] = useSearchParams();
+  const queryCategory = searchParams.get("category");
+  const searchQuery = searchParams.get("q");
+
   const [filters, setFilters] = useState({
     category: null,
     weight: null,
     priceRange: null,
     brand: null,
+    search: null,
   });
+
+  useEffect(() => {
+    const categoryToFilter = urlCategory || queryCategory;
+    if (categoryToFilter) {
+      // Find the actual category name from our list if it's a slug
+      const actualCategory = categories.find(
+        (c) => c.name.toLowerCase().replace(/\s+/g, "-") === categoryToFilter,
+      );
+
+      setFilters((prev) => ({
+        ...prev,
+        category: actualCategory ? actualCategory.name : categoryToFilter,
+      }));
+    }
+
+    if (searchQuery) {
+      setFilters((prev) => ({
+        ...prev,
+        search: searchQuery,
+      }));
+    }
+  }, [urlCategory, queryCategory, searchQuery]);
+
   const [sortBy, setSortBy] = useState("featured");
   const [itemsPerPage, setItemsPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(1);
@@ -311,6 +344,11 @@ function ProductListing() {
       const { min, max } = filters.priceRange;
       if (product.price < min || product.price > max) return false;
     }
+    if (
+      filters.search &&
+      !product.title.toLowerCase().includes(filters.search.toLowerCase())
+    )
+      return false;
     return true;
   });
 
@@ -811,20 +849,18 @@ function ProductListing() {
                 </div>
               </div>
 
-              {/* Product Grid */}
+              {/* Product Grid/List */}
               <div
-                className={`grid gap-6 ${
+                className={`grid gap-8 ${
                   viewMode === "grid"
                     ? "grid-cols-[repeat(auto-fill,minmax(200px,1fr))]"
                     : "grid-cols-1"
                 }`}
               >
-                {paginatedProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className={viewMode === "list" ? "flex" : ""}
-                  >
+                {paginatedProducts.map((product) =>
+                  viewMode === "grid" ? (
                     <FeaturedProductCard
+                      key={product.id}
                       productDetails={{
                         title: product.title,
                         salePrice: product.salePrice,
@@ -835,8 +871,23 @@ function ProductListing() {
                       productImage2={product.image2}
                       maxWidth={false}
                     />
-                  </div>
-                ))}
+                  ) : (
+                    <ProductListCard
+                      key={product.id}
+                      productDetails={{
+                        id: product.id,
+                        title: product.title,
+                        salePrice: product.salePrice,
+                        regularPrice: product.regularPrice,
+                        weight: product.weight,
+                        category: product.category,
+                      }}
+                      tag={product.tag}
+                      productImage1={product.image1}
+                      productImage2={product.image2}
+                    />
+                  ),
+                )}
               </div>
 
               {/* Pagination */}

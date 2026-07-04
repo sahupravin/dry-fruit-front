@@ -1,5 +1,6 @@
 import ScrollToTop from "../../utils/ScrollToTop";
-import Header from "../../componenets/common/Header";
+import Header from "../../componenets/Header";
+import Footer from "../../componenets/common/Footer";
 import SearchBar from "../../componenets/SearchBar";
 import { useLocation } from "react-router";
 
@@ -9,9 +10,15 @@ const LayoutWrapper = ({ children }) => {
     <>
       <ScrollToTop />
       <SearchBar />
-      {!location.pathname.includes("/auth/") && <Header />}
+      {!location.pathname.includes("/auth/") ||
+      location.pathname === "/auth/profile" ? (
+        <Header />
+      ) : null}
       {children}
-      {/* <Footer /> */}
+      {!location.pathname.includes("/auth/") ||
+      location.pathname === "/auth/profile" ? (
+        <Footer />
+      ) : null}
     </>
   );
 };

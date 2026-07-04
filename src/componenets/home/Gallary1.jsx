@@ -16,6 +16,7 @@ function Gallary() {
                 </h2>
                 <p className="mb-4 text-3xl">50% FLAT OFFER ALL PRODUCTS</p>
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -32,23 +33,7 @@ function Gallary() {
                 </h3>
 
                 <Button
-                  variant="secondary"
-                  size="medium"
-                  textColor="white"
-                  borderColor="secondary"
-                >
-                  Shop Now
-                </Button>
-              </div>
-            </GallaryImageCard>
-
-            <GallaryImageCard image="https://waffy-demo.myshopify.com/cdn/shop/files/category-img2_470x.jpg?v=1614285054">
-              <div className="bg-brand-700/85 absolute right-8 bottom-8 z-20 flex w-auto flex-col items-center justify-center p-4 text-white">
-                <h3 className="font-heading text-brand-400 mb-4 text-4xl">
-                  Cardamom
-                </h3>
-
-                <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -66,6 +51,7 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -83,6 +69,25 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
+                  variant="secondary"
+                  size="medium"
+                  textColor="white"
+                  borderColor="secondary"
+                >
+                  Shop Now
+                </Button>
+              </div>
+            </GallaryImageCard>
+
+            <GallaryImageCard image="https://waffy-demo.myshopify.com/cdn/shop/files/category-img2_470x.jpg?v=1614285054">
+              <div className="bg-brand-700/85 absolute right-8 bottom-8 z-20 flex w-auto flex-col items-center justify-center p-4 text-white">
+                <h3 className="font-heading text-brand-400 mb-4 text-4xl">
+                  Cardamom
+                </h3>
+
+                <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -106,6 +111,7 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -122,6 +128,7 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -138,6 +145,7 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -154,6 +162,7 @@ function Gallary() {
                 </h3>
 
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="white"
@@ -173,6 +182,7 @@ function Gallary() {
                   <span className="block font-bold">GET 50 CASHBACK</span>
                 </p>
                 <Button
+                  to="/products"
                   variant="secondary"
                   size="medium"
                   textColor="black"

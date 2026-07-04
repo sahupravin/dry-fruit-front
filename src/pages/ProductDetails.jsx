@@ -235,6 +235,7 @@ const ProductInfo = ({ product, onAddToCart, onAddToWishlist }) => {
           Add to Cart
         </Button>
         <Button
+          to="/Your-Shopping-Cart"
           variant="secondary"
           borderColor="secondary"
           size="medium"
@@ -344,7 +345,7 @@ const ProductTabs = () => {
       {/* Enquiry Link */}
       <div className="pt-4">
         <Link
-          to="#"
+          to="/pages/contact-us"
           className="text-brand-50 hover:text-brand-500 inline-flex items-center gap-2 transition-colors"
         >
           <span className="text-lg">?</span>

@@ -124,15 +124,26 @@ const CartDrawer = () => {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <button className="border-brand-500 text-brand-600 hover:bg-brand-50 hover:border-brand-50 w-full rounded-full border bg-white py-3 transition-colors duration-300">
+              <Button
+                to="/checkout"
+                variant="secondary"
+                borderColor="secondary"
+                size="medium"
+                className="w-full rounded-full"
+                onClick={closeCart}
+              >
                 Proceed to Checkout
-              </button>
-              <a
-                href="/Your-Shopping-Cart"
-                className="border-brand-500 text-brand-600 hover:bg-brand-50 hover:border-brand-50 block w-full rounded-full border bg-white py-3 text-center transition-colors duration-300"
+              </Button>
+              <Button
+                to="/Your-Shopping-Cart"
+                variant="secondary"
+                borderColor="secondary"
+                size="medium"
+                className="w-full rounded-full"
+                onClick={closeCart}
               >
                 View Cart
-              </a>
+              </Button>
             </div>
           </div>
         )}
